@@ -1,12 +1,10 @@
 package com.example.myapplication.data.category.impl
 
-import com.google.gson.Gson
 
-// 分类的数据模型类
-
-typealias Categorys = ArrayList<CategoryElement>
-
-data class CategoryElement (
+/**
+ * 超级大分类
+ */
+data class Category (
     val cname: String,
     val cpic: String,
     val subcategories: List<Subcategory>,

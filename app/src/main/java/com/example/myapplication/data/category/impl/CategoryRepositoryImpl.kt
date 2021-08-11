@@ -4,7 +4,10 @@ import com.example.myapplication.data.category.CategoryRepository
 import com.example.myapplication.service.category.CategoryService
 import com.example.myapplication.util.BaseApiServiceCreate
 import com.example.myapplication.util.await
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.withContext
 
 /**
@@ -15,6 +18,10 @@ class CategoryRepositoryImpl : CategoryRepository {
     private val service: CategoryService = BaseApiServiceCreate.create(CategoryService::class.java)
 
 
+    /**
+     * 存放分类数据状态
+     */
+    private val categorys = MutableStateFlow<List<Category>>(listOf())
 
     /**
      * 从服务器获取分类数据
@@ -23,9 +30,22 @@ class CategoryRepositoryImpl : CategoryRepository {
     override suspend fun getCategorys() {
 
         withContext(Dispatchers.IO) {
-           val result =  service.getCategorys().await()
-            println(result)
+            val result = service.getCategorys().await()
+            if(result.isSuccess()){
+                val data = result.getData
+                val list = Gson().fromJson(data,List::class.java)
+                println(list.size)
+            }
         }
 
+    }
+
+    /**
+     * 观察超级大分类数据
+     * 这个方法用来干嘛的??
+     * ps: 当分类数据变更的时候,在compose 组件里面可以通过 #collectAsState 方法来转变为组件状态来刷新UI
+     */
+    override fun observeCategory(): Flow<List<Category>> {
+        return categorys
     }
 }

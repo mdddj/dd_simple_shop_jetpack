@@ -15,7 +15,14 @@ import com.example.myapplication.R
 
 
 @Composable
-fun HomeScreenComposable() {
+fun HomeScreenComposable(
+
+) {
+
+
+
+
+
     Scaffold(
         topBar = { SearchAppbar() }
     ) {
