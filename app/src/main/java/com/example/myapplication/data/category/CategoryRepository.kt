@@ -11,6 +11,10 @@ interface CategoryRepository {
      */
     suspend fun getCategorys()
 
+    /**
+     * 获取博客分类数据
+     */
+    suspend fun getBlogCategorys()
 
     /**
      * 观察超级大分类数据

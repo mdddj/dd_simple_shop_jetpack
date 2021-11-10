@@ -18,7 +18,7 @@ import kotlin.coroutines.suspendCoroutine
  */
 object BaseApiServiceCreate {
 
-    private const val BASE_URL = "https://itbug.shop/tkapi/api/v1/dtk/apis"
+    private const val BASE_URL = "https://itbug.shop/"
 
     private val retrofit =
         Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create())

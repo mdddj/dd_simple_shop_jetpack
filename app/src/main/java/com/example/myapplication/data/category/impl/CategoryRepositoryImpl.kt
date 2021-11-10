@@ -1,5 +1,6 @@
 package com.example.myapplication.data.category.impl
 
+import android.util.Log
 import com.example.myapplication.data.category.CategoryRepository
 import com.example.myapplication.service.category.CategoryService
 import com.example.myapplication.util.BaseApiServiceCreate
@@ -9,13 +10,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 /**
  * 获取全局分类数据的实现
  */
 class CategoryRepositoryImpl : CategoryRepository {
-
-    private val service: CategoryService = BaseApiServiceCreate.create(CategoryService::class.java)
 
 
     /**
@@ -30,14 +30,27 @@ class CategoryRepositoryImpl : CategoryRepository {
     override suspend fun getCategorys() {
 
         withContext(Dispatchers.IO) {
-            val result = service.getCategorys().await()
+            val result = CategoryService.getInstance().getCategorys()
             if(result.isSuccess()){
                 val data = result.getData
                 val list = Gson().fromJson(data,List::class.java)
-                println(list.size)
+                Timber.d("${list.size}")
             }
         }
 
+    }
+
+    /**
+     * 获取博客分类数据
+     */
+    override suspend fun getBlogCategorys() {
+        withContext(Dispatchers.IO) {
+            val result = CategoryService.getInstance().getBlogsCategorys()
+            Log.i("Myapp"," 获取到博客分类数据${result}")
+            if(result.isSuccess()){
+
+            }
+        }
     }
 
     /**
