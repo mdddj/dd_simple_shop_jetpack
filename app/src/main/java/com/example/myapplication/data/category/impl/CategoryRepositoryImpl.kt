@@ -3,14 +3,11 @@ package com.example.myapplication.data.category.impl
 import android.util.Log
 import com.example.myapplication.data.category.CategoryRepository
 import com.example.myapplication.service.category.CategoryService
-import com.example.myapplication.util.BaseApiServiceCreate
-import com.example.myapplication.util.await
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 
 /**
  * 获取全局分类数据的实现
@@ -34,7 +31,6 @@ class CategoryRepositoryImpl : CategoryRepository {
             if(result.isSuccess()){
                 val data = result.getData
                 val list = Gson().fromJson(data,List::class.java)
-                Timber.d("${list.size}")
             }
         }
 
@@ -47,9 +43,6 @@ class CategoryRepositoryImpl : CategoryRepository {
         withContext(Dispatchers.IO) {
             val result = CategoryService.getInstance().getBlogsCategorys()
             Log.i("Myapp"," 获取到博客分类数据${result}")
-            if(result.isSuccess()){
-
-            }
         }
     }
 
